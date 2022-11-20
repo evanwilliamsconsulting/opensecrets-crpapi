@@ -38,7 +38,19 @@ class Client(object):
 
         self.apikey = apikey
         self.http = httplib2.Http(cache)
+    
+    # EJW 20221120 Implement a function fetchAll to return data from a method
+    # That might not be in JSON format such as getLegislators
+    def fetchAll(self, method, **kwargs):
+        """ Make the API request. """
 
+        params = urllib.urlencode(kwargs)
+        url = self.BASE_URI.format(method=method, apikey=self.apikey, params=params)
+        headers = {'User-Agent' : 'Mozilla/5.0'}
+
+        resp, content = self.http.request(url, headers=headers)
+        return content
+    
     def fetch(self, method, **kwargs):
         """ Make the API request. """
 
