@@ -171,7 +171,9 @@ class CRP(Client):
         if apikey is None:
             apikey = os.environ.get('OPENSECRETS_API_KEY')
 
-        super(CRP, self).__init__(apikey, cache)
+        super(CRP, self).__init__(apikey, cache
+        # EJW 20221120 Allow User to access Client object
+        self.client = Client(self.apikey, cache)
         self.candidates = CandidatesClient(self.apikey, cache)
         self.committees = CommitteesClient(self.apikey, cache)
         self.orgs = OrganizationsClient(self.apikey, cache)
